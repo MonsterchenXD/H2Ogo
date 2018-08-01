@@ -9,40 +9,49 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class StorageManager extends ZipManager{
+public abstract class StorageManager extends SerializeManager {
 
     private static final String PATH_SWIMMERS = "H2Ogo/Swimmers";
+    private static final String PATH_TEAMS = "H2Ogo/Teams";
     private static final String TAG = "StorageManager";
 
     public static List<Swimmer> ReadAllStoredSwimmers() {
         List<Swimmer> listSwimmers = new ArrayList<>();
-        List<String> listData = getZipdataOfPath(PATH_SWIMMERS);
+        List<String> listData = getSerdataOfPath(PATH_SWIMMERS);
         for (String data : listData)
-            listSwimmers.add(UnzipSwimmer(data));
+            listSwimmers.add(DeserializeToSwimmer(data));
         return listSwimmers;
     }
 
     public static void SaveAllSwimmers(List<Swimmer> listSwimmers) {
-        List<String> listZipdata = new ArrayList<>();
+        List<String> listSerdata = new ArrayList<>();
         for (Swimmer swimmer : listSwimmers)
-            listZipdata.add(ZipSwimmer(swimmer));
-        setZipdataOfPath(PATH_SWIMMERS, listZipdata);
+            listSerdata.add(swimmer.Serialize());
+        setSerdataOfPath(PATH_SWIMMERS, listSerdata);
     }
 
-    private static List<String> getZipdataOfPath(String path) {
+    public static List<Team> ReadAllStoredTeams() {
+        List<Team> listTeams = new ArrayList<>();
+        List<String> listData = getSerdataOfPath(PATH_TEAMS);
+        for (String data : listData)
+            listTeams.add(DeserializeToTeam(data));
+        return listTeams;
+    }
+
+    private static List<String> getSerdataOfPath(String path) {
         List<String> listStringsData = new ArrayList<>();
         File filepath = new File(Environment.getExternalStorageDirectory(), path);
         filepath.mkdirs();
         File[] files = filepath.listFiles();
         for (File file : files) {
             String storageId = file.toString().substring(file.toString().lastIndexOf('/') + 1);
-            String data = storageId + TR_STORAGE + getZipdataOfFile(file);
+            String data = storageId + TR_STORAGE + getSerdataOfFile(file);
             listStringsData.add(data);
         }
         return listStringsData;
     }
 
-    private static String getZipdataOfFile(File file) {
+    private static String getSerdataOfFile(File file) {
         try {
             FileInputStream fis = new FileInputStream(file);
             StringBuilder fileContent = new StringBuilder();
@@ -57,7 +66,7 @@ public abstract class StorageManager extends ZipManager{
         return "";
     }
 
-    private static void setZipdataOfPath(String path, List<String> listData) {
+    private static void setSerdataOfPath(String path, List<String> listData) {
         File filepath = new File(Environment.getExternalStorageDirectory(), path);
         filepath.mkdirs();
         for (int i = 0; i < listData.size(); i++) {
@@ -65,11 +74,11 @@ public abstract class StorageManager extends ZipManager{
             String storageId = data.split(TR_STORAGE)[0];
             data = data.substring(storageId.length() + TR_STORAGE.length());
             File file = new File(filepath, storageId);
-            setZipdataOfFile(file, data);
+            setSerdataOfFile(file, data);
         }
     }
 
-    private static void setZipdataOfFile(File file, String data) {
+    private static void setSerdataOfFile(File file, String data) {
         try {
             file.createNewFile();
             FileOutputStream fos = new FileOutputStream(file);

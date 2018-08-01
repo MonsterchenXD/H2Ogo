@@ -6,4 +6,6 @@ public abstract class DataSet {
 
     abstract void Log();
 
+    public abstract String Serialize();
+
 }

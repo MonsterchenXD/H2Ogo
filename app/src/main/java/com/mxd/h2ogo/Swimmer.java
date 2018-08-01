@@ -12,6 +12,12 @@ public class Swimmer extends DataSet{
         this.name = name;
     }
 
+    @Override
+    public String Serialize() {
+        return SerializeManager.Serialize(this);
+    }
+
+    @Override
     public void Log() {
         Log.w(TAG, storageId + " " + name);
     }

@@ -12,6 +12,11 @@ public class Team extends DataSet {
         this.name = name;
     }
 
+    @Override
+    public String Serialize() {
+        return SerializeManager.Serialize(this);
+    }
+
     public void Log() {
         Log.w(TAG, storageId + " " + name);
     }
