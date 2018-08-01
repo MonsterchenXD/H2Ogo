@@ -107,7 +107,6 @@ public abstract class StorageManager extends SerializeManager {
             e.printStackTrace();
         }
     }
-
     public static String ReadExternal(String path, String filename) {
         String data = "";
         try {
