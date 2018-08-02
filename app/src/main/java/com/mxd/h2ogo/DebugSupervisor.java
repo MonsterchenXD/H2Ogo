@@ -7,11 +7,14 @@ public abstract class DebugSupervisor {
     private static final String TAG = "DabugSupervisor";
     private static long start;
 
-    public static void StartMeasuring() {
+    /**
+     * Measuring
+     */
+    public static void startMeasuring() {
         start = System.currentTimeMillis();
     }
 
-    public static void StopMeasuring() {
+    public static void stopMeasuring() {
         Log.w(TAG, "Time since start: " + (System.currentTimeMillis() - start));
     }
 

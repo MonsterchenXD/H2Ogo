@@ -1,11 +1,14 @@
 package com.mxd.h2ogo;
 
+
 public abstract class DataSet {
 
     String storageId;
 
-    abstract void Log();
+    public abstract void log();
 
-    public abstract String Serialize();
+    public abstract String serialize();
+
+    public abstract String toString();
 
 }

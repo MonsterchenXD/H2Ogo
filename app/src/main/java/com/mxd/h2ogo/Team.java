@@ -5,6 +5,7 @@ import android.util.Log;
 public class Team extends DataSet {
 
     private static final String TAG = "Team";
+
     String name;
 
     public Team(String storageId, String name) {
@@ -13,12 +14,18 @@ public class Team extends DataSet {
     }
 
     @Override
-    public String Serialize() {
-        return SerializeManager.Serialize(this);
+    public String serialize() {
+        return SerializeManager.serialize(this);
     }
 
-    public void Log() {
-        Log.w(TAG, storageId + " " + name);
+    @Override
+    public void log() {
+        Log.w(TAG, toString());
+    }
+
+    @Override
+    public String toString() {
+        return storageId + ", " + name;
     }
 
 }

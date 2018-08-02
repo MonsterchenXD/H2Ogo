@@ -19,7 +19,8 @@ public class MainActivity extends AppCompatActivity
 
     private static final String TAG = "MainActivity";
     public static MainActivity ma;
-    RuntimeStorage rt;
+
+    RuntimeStorage rs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +33,7 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
 
@@ -47,13 +47,13 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         ma = this;
-        rt = new RuntimeStorage();
+        rs = new RuntimeStorage();
         Log.w(TAG, "onCreate");
     }
 
     @Override
     protected void onStop() {
-        rt.Save();
+        rs.save();
         Log.w(TAG, "onStop");
         super.onStop();
     }

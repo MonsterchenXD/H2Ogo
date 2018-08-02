@@ -2,9 +2,10 @@ package com.mxd.h2ogo;
 
 import android.util.Log;
 
-public class Swimmer extends DataSet{
+public class Swimmer extends DataSet {
 
     private static final String TAG = "Swimmer";
+
     String name;
 
     public Swimmer(String storageId, String name) {
@@ -13,13 +14,18 @@ public class Swimmer extends DataSet{
     }
 
     @Override
-    public String Serialize() {
-        return SerializeManager.Serialize(this);
+    public String serialize() {
+        return SerializeManager.serialize(this);
     }
 
     @Override
-    public void Log() {
-        Log.w(TAG, storageId + " " + name);
+    public void log() {
+        Log.w(TAG, toString());
+    }
+
+    @Override
+    public String toString() {
+        return storageId + ", " + name;
     }
 
 }
